@@ -3,7 +3,6 @@ import axios from 'axios';
 import QRCode from 'react-qr-code';
 const API_URL =
   process.env.REACT_APP_API_URL || "http://localhost:5000";
-
 export default function App() {
   // --- 1. STATE MANAGEMENT ---
   const [step, setStep] = useState(1);
