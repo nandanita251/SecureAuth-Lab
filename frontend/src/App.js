@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import QRCode from 'react-qr-code';
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
 export default function App() {
   // --- 1. STATE MANAGEMENT ---
@@ -17,7 +18,7 @@ export default function App() {
   // Fetch the latest security logs from Python Backend
   const fetchLogs = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/logs');
+      const res = await axios.get(`${API_URL}/api/logs`);
       setAuditLogs(res.data);
     } catch (err) {
       console.error("Audit Log Fetch Error:", err);
@@ -33,7 +34,7 @@ export default function App() {
   const handleEmailSubmit = async () => {
     setError('');
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/step1', { email });
+      const res = await axios.post(`${API_URL}/api/auth/step1`, { email });
       if (res.data.status === 'setup_required') {
         setQrUri(res.data.qr_uri);
         setIsNewUser(true);
@@ -50,7 +51,7 @@ export default function App() {
   const verifyCode = async () => {
     setError('');
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/step2', { email, code });
+      const res = await axios.post(`${API_URL}/api/auth/step2`, { email, code });
       if (res.data.success) {
         await fetchLogs(); // Update logs to show success
         setStep(3);
