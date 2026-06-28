@@ -1,0 +1,6 @@
+Flask
+Flask-Cors
+flask-jwt-extended
+pyotp
+bcrypt
+gunicorn
